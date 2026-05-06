@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* GridSense / BESCOM palette */
+    --gs-blue: #1a3c6e;
+    --gs-blue-dark: #142e54;
+    --gs-blue-light: #2a558f;
+    --gs-saffron: #f5a623;
+    --gs-saffron-dark: #d88f12;
+    --gs-grey-bg: #f4f6f8;
+    --gs-grey-border: #d9dee4;
+    --gs-text: #1f2937;
+    --gs-text-soft: #5b6573;
+    --gs-success: #2e7d32;
+    --gs-warning: #e65100;
+    --gs-danger: #c62828;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 220 25% 14%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 25% 14%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 25% 14%;
+        --primary: 213 62% 26%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 17% 95%;
+        --secondary-foreground: 213 62% 26%;
+        --muted: 210 17% 95%;
+        --muted-foreground: 215 14% 40%;
+        --accent: 36 91% 55%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 65% 47%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 215 16% 87%;
+        --input: 215 16% 87%;
+        --ring: 213 62% 26%;
+        --radius: 0.375rem;
+    }
+}
+
+* {
+    border-color: hsl(var(--border));
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    font-family: 'Noto Sans', 'Roboto', sans-serif;
+    background-color: var(--gs-grey-bg);
+    color: var(--gs-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono, .mono { font-family: 'Roboto Mono', monospace; }
+
+/* Government-style cards */
+.gs-card {
+    background: #ffffff;
+    border: 1px solid var(--gs-grey-border);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    border-radius: 4px;
+}
+
+.gs-card-header {
+    background: var(--gs-blue);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* Stat card with blue header strip */
+.gs-stat {
+    background: #fff;
+    border: 1px solid var(--gs-grey-border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.gs-stat:hover {
+    box-shadow: 0 4px 12px rgba(26, 60, 110, 0.08);
+}
+.gs-stat-header {
+    background: var(--gs-blue);
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.gs-stat-body {
+    padding: 16px;
+}
+.gs-stat-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--gs-blue);
+    line-height: 1.1;
+}
+.gs-stat-label {
+    color: var(--gs-text-soft);
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+/* Government-style buttons */
+.btn-gov {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+.btn-gov-primary { background: var(--gs-blue); color: #fff; }
+.btn-gov-primary:hover { background: var(--gs-blue-dark); }
+.btn-gov-secondary { background: #fff; color: var(--gs-blue); border-color: var(--gs-blue); }
+.btn-gov-secondary:hover { background: var(--gs-blue); color: #fff; }
+.btn-gov-saffron { background: var(--gs-saffron); color: #1f2937; }
+.btn-gov-saffron:hover { background: var(--gs-saffron-dark); color: #fff; }
+
+/* Tables */
+.gs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+.gs-table thead th {
+    background: var(--gs-blue);
+    color: #fff;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.gs-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gs-grey-border);
+}
+.gs-table tbody tr:nth-child(even) { background: #fafbfc; }
+.gs-table tbody tr:hover { background: #eef3f9; }
+
+/* Status pills */
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.pill-low      { background: #e8f5e9; color: var(--gs-success); }
+.pill-medium   { background: #fff8e1; color: #b8860b; }
+.pill-high     { background: #fff3e0; color: var(--gs-warning); }
+.pill-critical { background: #ffebee; color: var(--gs-danger); }
+.pill-active     { background: #e8f5e9; color: var(--gs-success); }
+.pill-idle       { background: #e3f2fd; color: var(--gs-blue); }
+.pill-overloaded { background: #ffebee; color: var(--gs-danger); }
+.pill-pending  { background: #fff8e1; color: #b8860b; }
+.pill-accepted { background: #e8f5e9; color: var(--gs-success); }
+.pill-rejected { background: #f5f5f5; color: #6b7280; }
+
+/* Input focus */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gs-blue) !important;
+    box-shadow: 0 0 0 2px rgba(26, 60, 110, 0.12);
+}
+
+/* Top tricolor accent bar */
+.tricolor-bar {
+    height: 3px;
+    background: linear-gradient(to right, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
+}
+
+/* Sidebar */
+.gs-sidebar {
+    background: var(--gs-blue);
+    color: #fff;
+    width: 240px;
+    min-height: calc(100vh - 64px);
+}
+.gs-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.875rem;
+    border-left: 3px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.gs-sidebar a:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.gs-sidebar a.active {
+    background: rgba(245, 166, 35, 0.12);
+    border-left-color: var(--gs-saffron);
+    color: #fff;
+}
+
+/* Top navbar */
+.gs-navbar {
+    background: var(--gs-blue);
+    color: #fff;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 3px solid var(--gs-saffron);
+}
+
+/* Leaflet z-index fix */
+.leaflet-container {
+    z-index: 1;
+    border-radius: 4px;
+}
+
+/* Animations */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.4s ease-out both; }
+
+.delay-1 { animation-delay: 60ms; }
+.delay-2 { animation-delay: 120ms; }
+.delay-3 { animation-delay: 180ms; }
+.delay-4 { animation-delay: 240ms; }
